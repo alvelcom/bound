@@ -5,18 +5,18 @@ This program demonstrates how to create a basic sandbox for solution checking.
 
 We consider that solution is some executable file (only `./under` at this point).
 
-This project in the early stage of development. That is you _really_ should not use
+This project in the early stage of development. That means you _really_ should not use
 it in production.
 
-There are several actions are performed when you're doing `./bound`, let's
+That are performed when you're doing `./bound`, let's
 describe sequence of them:
 * in `run_standalone` process forks;
-* then in child process we setting up limits for cpu and memory;
-* after child process says that parent should trace his child;
+* then in child process we set up limits for cpu and memory;
+* after that child process says TRACEME;
 * meanwhile parent process waits for this in `waitpid`;
-* child process performing `execv`, that is It's changing image to `./under`;
+* child process performing `execv`, that changes image to `./under`;
 * `./under` is executed;
-* meanwhile parents waits for a syscall in child process or just for child termination;
+* meanwhile parent waits for a syscall in child process or just for child termination;
 * the situation when syscall is taking place in child is caught by parent in the
   `syscallwall`, `syscallwall` just print debug message at this point.
 
